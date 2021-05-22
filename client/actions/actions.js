@@ -17,3 +17,4 @@ import * as types from '../constants/actionTypes';
 //     type: types.ADD_CARD,
 //     payload: marketId,
 // });
+const test = 'test';
