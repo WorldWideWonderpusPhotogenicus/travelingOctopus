@@ -12,8 +12,6 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-
-
 app.use((err, req, res, next) => {
   return res.sendStatus(500);
 });
