@@ -22,32 +22,40 @@ databaseController.bcrypt = (req, res, next) => {
 
 databaseController.verifyAccount = (req, res, next) => {
     // write code here
-    let queryString = '';
     const { username, password } = req.body;
+    let queryString = 'SELECT ;' 
 
-    query({ username: username, password: password }, (err, users) => {
+    query(queryString)
+      .then((data) => {
 
-    if (users.length === 0) {
-      return res.redirect('/signup');
-    } else {
-      res.locals.currentUser = users;
-      return next();
-    } 
-  })
+      })
+      .catch((err) => res.render('./../client/login', {
+        error: `databaseController.verifyAccount : ERROR: ${err}`,
+        message: { err: 'error occurred in databaseController.verifyAccount'}
+      }))
+  //   if (users.length === 0) {
+  //     return res.redirect('/signup');
+  //   } else {
+  //     res.locals.currentUser = users;
+  //     return next();
+  //   } 
+  // })
   };
   
   databaseController.addAccount = (req, res, next) => {
     // write code here
-    const { username, password } = req.body;
+    // const { username, password } = req.body;
+    const password = res.locals.bcrypt;
+    const values = [req.body.username, password];
+    let queryString = 'INSERT INTO account(username, password, currency) VALUES($1, $2);' 
 
-    User.create({ username, password })
-    // console.log('GOT TO HERE!');
+    query(queryString)
       .then(data => {
         return next();
       })
       .catch((err) => res.render('./../client/signup', {
-        error: `userController.createUser : ERROR: ${err}`,
-        message: { err: 'error occurred in userController.createUser'}
+        error: `databaseController.addAccount : ERROR: ${err}`,
+        message: { err: 'error occurred in databaseController.addAccount'}
       }))
   };
   
