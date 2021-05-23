@@ -1,7 +1,8 @@
 const { response } = require('express');
-const { query } = require('../models/databaseModels');
+const { query } = require('../../models/databaseModels');
 //Import bcrypt into file
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const saltRounds = 10;
 
 const databaseController = {};
@@ -14,6 +15,7 @@ databaseController.bcrypt = (req, res, next) => {
       return res.status(400).send('Error: Unable to store password.');
     }
     //stores the hash function into res.locals
+    console.log(hash)
     res.locals.bcrypt = hash;
     //returns next() that will pass the hashed password to the next middleware function
     return next();
@@ -22,34 +24,31 @@ databaseController.bcrypt = (req, res, next) => {
 
 databaseController.verifyAccount = (req, res, next) => {
     // write code here
-    const { username, password } = req.body;
-    let queryString = 'SELECT ;' 
+    // const { username, password } = req.body;
+    const values = [req.body.username];
+    let queryString = 'SELECT password FROM account WHERE username = $1;' 
 
-    query(queryString)
+    query(queryString, values)
       .then((data) => {
-
+        console.log(data.rows[0].password)
+        console.log(req.body.password)
+        console.log(bcrypt.compareSync(req.body.password, data.rows[0].password))
+        return next()
       })
       .catch((err) => res.render('./../client/login', {
         error: `databaseController.verifyAccount : ERROR: ${err}`,
         message: { err: 'error occurred in databaseController.verifyAccount'}
       }))
-  //   if (users.length === 0) {
-  //     return res.redirect('/signup');
-  //   } else {
-  //     res.locals.currentUser = users;
-  //     return next();
-  //   } 
-  // })
   };
   
   databaseController.addAccount = (req, res, next) => {
     // write code here
     // const { username, password } = req.body;
-    const password = res.locals.bcrypt;
-    const values = [req.body.username, password];
-    let queryString = 'INSERT INTO account(username, password, currency) VALUES($1, $2);' 
+    const password = res.locals.bcrypt; 
+    const values = [req.body._id, req.body.name, req.body.username, password, req.body.currency];
+    let queryString = 'INSERT INTO account(_id, name, username, password, currency) VALUES($1, $2, $3, $4, $5);' 
 
-    query(queryString)
+    query(queryString, values)
       .then(data => {
         return next();
       })
@@ -77,7 +76,7 @@ databaseController.verifyAccount = (req, res, next) => {
       });
   };
   
-  starWarsController.addItinerary = (req, res, next) => {
+  databaseController.addItinerary = (req, res, next) => {
     // write code here
   
     next();
@@ -107,5 +106,5 @@ databaseController.verifyAccount = (req, res, next) => {
       });
   };
   
-  module.exports = starWarsController;
+  module.exports = databaseController;
   
