@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
-app.post('/database/login', databaseController.verifyAccount, (req, res) => {
+app.post('/login', databaseController.bcrypt, databaseController.verifyAccount, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   res.redirect('/');
 });
@@ -25,7 +25,7 @@ app.get('/signup', (req, res) => {
 });
 
 //user posts request on signup page, create user and return 'home' page
-app.post('/signup', databaseController.addAccount, (req, res) => {
+app.post('/signup', databaseController.bcrypt, databaseController.addAccount, (req, res) => {
   // when user successfully signs up, need to save account, then redirect them to home page
   res.redirect('/');
 });
