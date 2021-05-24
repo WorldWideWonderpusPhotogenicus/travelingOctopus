@@ -70,16 +70,51 @@ databaseController.getAccountID = (req, res, next) => {
 };
 
 databaseController.getItinerary = (req, res, next) => {
-  // This middleware to be used after verifyAccount
-  const accountID = [1]; //Input test accountID. It will be obtained from a cookie.
+  const accountID = req.cookies.accountID; //Account ID is obtained from a cookie.
   // const accountID = [res.locals.accountID];
-  console.log('You made it to account id: ', accountID);
   // let queryString = 'SELECT i.*, c.name AS country_name, c.currency_code AS currency_code, f.name AS flight_name, f.price AS flight_price, h.name AS hotel_name, h.price AS hotel_price, y.name AS activity_name, y.price AS activity_price FROM itinerary i LEFT OUTER JOIN country c on i.country_id = c._id LEFT OUTER JOIN flight f on i.flight_id = f._id LEFT OUTER JOIN hotel h on i.hotel_id = h._id LEFT OUTER JOIN itinerary_activity x on i._id = x.itinerary_id LEFT OUTER JOIN activity y ON x.activity_id = y._id WHERE account_id = $1;' 
   let queryString = 'SELECT i.*, c.name AS country_name, c.currency_code AS currency_code, f.name AS flight_name, f.price AS flight_price, h.name AS hotel_name, h.price AS hotel_price, u.name AS name, u.currency AS user_currency FROM itinerary i LEFT OUTER JOIN country c on i.country_id = c._id LEFT OUTER JOIN flight f on i.flight_id = f._id LEFT OUTER JOIN hotel h on i.hotel_id = h._id LEFT OUTER JOIN account u ON i.account_id = u._id WHERE account_id = $1;' 
   query(queryString, accountID)
       .then(data => {
         console.log(data.rows);
         res.locals.itinerary = data.rows;
+        return next();
+      })
+      .catch((err) => res.render('../../client/signup', {
+        error: `databaseController.getItinerary : ERROR: ${err}`,
+        message: { err: 'error occurred in databaseController.getItinerary'}
+      }))
+};
+
+databaseController.getActivities = (req, res, next) => {
+  const accountID = [1];
+  // const accountID = req.cookies.accountID; //Account ID is obtained from a cookie.
+  // const accountID = [res.locals.accountID];
+  let queryString = 'SELECT i.*, y.name AS activity_name, y.price AS activity_price FROM itinerary i LEFT OUTER JOIN itinerary_activity x on i._id = x.itinerary_id LEFT OUTER JOIN activity y ON x.activity_id = y._id WHERE account_id = $1;' 
+  // let queryString = 'SELECT i.*, c.name AS country_name, c.currency_code AS currency_code, f.name AS flight_name, f.price AS flight_price, h.name AS hotel_name, h.price AS hotel_price, u.name AS name, u.currency AS user_currency FROM itinerary i LEFT OUTER JOIN country c on i.country_id = c._id LEFT OUTER JOIN flight f on i.flight_id = f._id LEFT OUTER JOIN hotel h on i.hotel_id = h._id LEFT OUTER JOIN account u ON i.account_id = u._id WHERE account_id = $1;' 
+  query(queryString, accountID)
+      .then(data => {
+        console.log(data.rows);
+        res.locals.activities = data.rows;
+        return next();
+      })
+      .catch((err) => res.render('../../client/signup', {
+        error: `databaseController.getActivities : ERROR: ${err}`,
+        message: { err: 'error occurred in databaseController.getActivities'}
+      }))
+};
+
+databaseController.createItineraryActivity = (req, res, next) => {
+  //!! Need to persist itinerary id from the request object for the next middleware
+  // Add activity name and activity cost from req.body to a new array
+  const itineraryID = 20;
+  const values = [itineraryID, res.locals.activityID];
+  console.log(values);
+  // Query will add activity name and cost to activity table and return its id
+  let queryString = 'INSERT INTO itinerary_activity(itinerary_id, activity_id) VALUES($1, $2);';
+  query(queryString, values)
+      .then(data => {
+        console.log('Insert into itinerary_activity success!');
         return next();
       })
       .catch((err) => res.render('../../client/signup', {
