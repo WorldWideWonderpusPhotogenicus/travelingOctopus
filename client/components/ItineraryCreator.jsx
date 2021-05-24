@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 const ItineraryCreator = (props) => {
-    const [count, setCount] = useState(1);
+    // const [count, setCount] = useState(1);
 
-    const inputArrays = [];
+    // const inputArrays = [];
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        for (let i = 0; i < count; i++) {
-            inputArrays.push(
-                <label>
-            Add Activity
-            <input name={`activity${i}`} type="text" placeholder ="activity"/>
-            <input name={`activityCost${i}`} type="number" placeholder="amount" />
-        </label>
-        )
-    }
-    },[count])
+    //     for (let i = 0; count < 5; i++) {
+    //         inputArrays.push(
+    //             <label>
+    //         Add Activity
+    //         <input name={`activity${i}`} type="text" placeholder ="activity"/>
+    //         <input name={`activityCost${i}`} type="number" placeholder="amount" />
+    //     </label>
+    //     )
+    // }
+    // },[])
 
     return (
         <div>
@@ -40,10 +40,16 @@ const ItineraryCreator = (props) => {
                     <input name="hotelCost" type="number" placeholder="hotel cost" />
                 </label>
                 <br></br>
-                {inputArrays}
+                {/* {inputArrays} */}
                 <br></br>
-                <button onClick={setCount(count + 1)}>Add Activity</button>
-                <button onClick={setCount(count - 1)}>Delete Activity</button>
+                <label>
+                    Add Activity
+                    <input name="activity" type="text" placeholder ="activity"/>
+                    <input name="activityCost" type="number" placeholder="amount" />
+                </label>
+                {/* <button onClick={setCount(count + 1)}>Add Activity</button>
+                <button onClick={setCount(count - 1)}>Delete Activity</button> */}
+                <br></br>
                 <input type="submit" value="Submit"/>
             </form>
         </div>

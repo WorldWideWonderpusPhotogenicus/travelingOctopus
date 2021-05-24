@@ -6,22 +6,22 @@ function UserContainer(props) {
   //variable?
   //variable?
   //how do I bring in the user name?
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     fetch('/db/getName')
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then(data => {
-  //         dispatch({ type: 'UPDATE_USER', payload: data })
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  // }, [dispatch]);
+  useEffect(() => {
+      fetch('/db/getName')
+        .then((res) => {
+          return res.json();
+        })
+        .then(data => {
+          dispatch({ type: 'UPDATE_USER', payload: data })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }, [dispatch]);
 
-  //const firstName = useSelector(state => state.username);
+  const firstName = useSelector(state => state.username);
 
   return (
     <div>
