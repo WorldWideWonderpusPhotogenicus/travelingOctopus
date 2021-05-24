@@ -1,0 +1,20 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Become A Traveling Octopus</title>
+</head>
+<body>
+  Signup
+  <form method='POST' action='/signup'>
+    <input name="fname" type="text" placeholder="first name" /> <br></br>
+    <input name="currency" type="text" placeholder="currency type" /> <br></br>
+    <input name="username" type="text" placeholder="username" /> <br></br>
+    <input name="password" type="password" placeholder="password" /> <br></br>
+    <input type='submit' value='Create User'></button>
+    <% if (error) { %>
+      <div>  Error </div>
+      <div> <%= error %> </div>
+    <% } %>
+  </form>
+</body>
+</html>
