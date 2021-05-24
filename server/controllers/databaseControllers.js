@@ -33,6 +33,7 @@ databaseController.verifyAccount = (req, res, next) => {
         console.log(data.rows[0].password)
         console.log(req.body.password)
         console.log(bcrypt.compareSync(req.body.password, data.rows[0].password))
+        res.locals.name = { fname :'Sean'};
         return next()
       })
       .catch((err) => res.render('./../client/login', {

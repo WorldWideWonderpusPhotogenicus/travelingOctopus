@@ -20,8 +20,10 @@ app.get('/', (req, res) => {
 app.post('/login', databaseController.verifyAccount, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
-  res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  res.render('../index', {name : res.locals.name});
 });
+
+
 
 //when user (get) requests signup page, then render signup page
 app.get('/signup', (req, res) => {
