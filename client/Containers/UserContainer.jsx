@@ -9,11 +9,13 @@ function UserContainer(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      fetch('/db/getName')
+      fetch('/db/getitinerary')
         .then((res) => {
+          console.log(res)
           return res.json();
         })
         .then(data => {
+          console.log(data);
           dispatch({ type: 'UPDATE_USER', payload: data })
         })
         .catch(err => {
@@ -21,12 +23,12 @@ function UserContainer(props) {
         })
   }, [dispatch]);
 
-  const firstName = useSelector(state => state.username);
+  const firstName = useSelector(state => state.octo.username);
 
   return (
     <div>
         <div>
-          {/* <h1>{firstName}</h1> */}
+          <h1>{firstName}</h1>
         </div>
         <div>
           <ItineraryCreator />

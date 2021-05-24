@@ -45,11 +45,11 @@ app.post('/signup', databaseController.bcrypt, databaseController.addAccount, (r
 
 //THIS WAS FOR TESTING, user creates itinerary here
 app.post('/itinerary', databaseController.addItinerary, (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  res.status(200).render('../index');
 })
 
-app.use('db/getitinerary', databaseController.getItinerary, (req, res) => {
-  return res.status(200).json(res.locals.itinerary);
+app.use('/db/getitinerary', databaseController.getItinerary, (req, res) => {
+  return res.status(200).send(res.locals.itinerary);
 });
 
 //Handles post request to add new activity to itinerary

@@ -26,7 +26,7 @@ module.exports = {
     port: 8080,
     proxy: {
       '/': 'http://localhost:3000',
-      '../../client/login': 'http://localhost:3000'
+      '/db': 'http://localhost:3000'
     }
   }
 }
