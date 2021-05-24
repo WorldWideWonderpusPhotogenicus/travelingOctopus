@@ -42,15 +42,19 @@ app.post('/itinerary', databaseController.addItinerary, (req, res) => {
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 })
 
-app.use('db/getitinerary', databaseController.getItinerary, (req, res) => {
+app.use('/db/getitinerary', databaseController.getItinerary, (req, res) => {
   return res.status(200).json(res.locals.itinerary);
+});
+
+app.use('/db/getactivities', databaseController.getActivities, (req, res) => {
+  return res.status(200).json(res.locals.activities);
 });
 
 //Handles post request to add new activity to itinerary
 //Note to populate itinerary_activity table and return all activities associated with the current itinerary id
-app.post('/addactivity', databaseController.addActivity, (req, res) => {
+app.post('/addactivity', databaseController.addActivity, databaseController.createItineraryActivity, (req, res) => {
   // when user successfully adds an activity, currently just returns status 200 and index.html
-  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  return res.status(200).send('Brian, please fix this return statement');
 });
 
 //global error handler
