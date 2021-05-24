@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 const databaseController = require('./controllers/databaseControllers');
+const cookieParser = require('cookie-parser');
+const cookieController = require('./controllers/cookieController');
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '../build')));
@@ -17,7 +20,7 @@ app.get('/', (req, res) => {
   return res.render('../client/login');
 });
 
-app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, databaseController.getItinerary, (req, res) => {
+app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, cookieController.setCookie, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
   return res.render('../index');
@@ -39,6 +42,11 @@ app.post('/signup', databaseController.bcrypt, databaseController.addAccount, (r
   // when user successfully signs up, need to save account, then redirect them to home page
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
+
+//THIS WAS FOR TESTING, user creates itinerary here
+app.post('/itinerary', databaseController.addItinerary, (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../index.html'));
+})
 
 //Handles post request to add new activity to itinerary
 //Note to populate itinerary_activity table and return all activities associated with the current itinerary id
