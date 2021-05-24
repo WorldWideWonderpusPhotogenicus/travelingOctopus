@@ -1,0 +1,32 @@
+components
+
+App
+  Main Container
+  User Container
+     |--User Account
+     |--Itinerary #
+  Trip Container
+     |-- Each Itinerary
+         |--Country
+         |--Flight
+         |--Hotel
+         |--Activities
+            |--Activity.Head
+            |--Activity.push(newAct); 
+
+
+
+Phillip's questions for Brian:
+
+App.jsx 3/4
+(https://react-redux.js.org/api/hooks)
+
+
+openstreet
+https://www.openstreetmap.org/export#map=6/-19.073/32.640
+
+beer api
+https://www.programmableweb.com/category/beer/api
+https://www.beermapping.com/api/
+https://prod.liveshare.vsengsaas.visualstudio.com/join?FF74EF25F1AB7458F1A993A7D337694EE984
+
