@@ -8,7 +8,7 @@ function MainContainer(){
   return (
     <div>
       <UserContainer />
-      <TripContainer />
+      {/* <TripContainer /> */}
     </div>
   );
 };

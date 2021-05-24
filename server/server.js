@@ -23,7 +23,11 @@ app.post('/login', databaseController.verifyAccount, databaseController.getAccou
   res.render('../index', {name : res.locals.name});
 });
 
-
+//test
+app.get('/db/get', (req, res) => {
+  console.log('req', req);
+  res.json('Peter');
+})
 
 //when user (get) requests signup page, then render signup page
 app.get('/signup', (req, res) => {
