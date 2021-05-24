@@ -9,24 +9,26 @@
  * ************************************
  */
 
- import * as types from '../constants/actionTypes';
+ //import * as types from './actions/actions.js';
 
  const initialState = {
-     test : 'testing'
+     test : 'testing',
+     country: '',
+     flight: '',
+     hotel: '',
+    //  conversion_Currency : '',
+     activities: []
  }
 
- const octopusReducers = (state = initialState, action) => {
 
-    switch (action.type) {
-    //     case types.ADD_MARKET: {
-    //         code
-    //     }
-        default: {
-            return state;
-      }
+const octopusReducers = (state = initialState, action) => {
+
+  switch (action.type) {
+    case 'activity/addAnotherActivity': {
+      console.log('dogs')
     }
-
-
- }
-
- export default octopusReducers;
+    default:
+      return state;
+  }
+}
+   export default octopusReducers;
