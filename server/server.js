@@ -3,6 +3,8 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 const databaseController = require('./controllers/databaseControllers');
+const cookieParser = require('cookie-parser');
+const cookieController = require('./controllers/cookieController');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +19,7 @@ app.get('/', (req, res) => {
   return res.render('../client/login');
 });
 
-app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, databaseController.getItinerary, (req, res) => {
+app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, cookieController.setCookie, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
   res.status(200).sendFile(path.join(__dirname, '../index.html'));

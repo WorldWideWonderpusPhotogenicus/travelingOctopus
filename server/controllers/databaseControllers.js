@@ -1,5 +1,3 @@
-
-const bcrypt = require("bcryptjs");
 const { response } = require('express');
 const { query } = require('../../models/databaseModels');
 const path = require('path');
@@ -205,12 +203,6 @@ databaseController.addActivity = (req, res, next) => {
       }))
 };
   
-  databaseController.addItinerary = (req, res, next) => {
-    // write code here
-  
-    next();
-  };
-  
   databaseController.deleteItinerary = (req, res, next) => {
     // write code here
     const id = req.body;
@@ -227,8 +219,7 @@ databaseController.addActivity = (req, res, next) => {
       .then(results => {
         res.locals.characters.length = results; 
         next();
-      })
-    );
+      });
 };
 
 // databaseController.deleteItinerary = (req, res, next) => {
