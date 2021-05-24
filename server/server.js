@@ -15,16 +15,40 @@ app.use(express.static(path.join(__dirname, '../build')));
 //use for rendering ejs templates, ejs must be rendered.
 app.set('view engine', 'ejs');
 
+
 app.get('/', (req, res) => {
   //change return filepath to login screen
   return res.render('../client/login');
 });
 
-app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, cookieController.setCookie, (req, res) => {
+//when user (get) requests signup page, then render signup page
+app.get('/signup', (req, res) => {
+  res.render('./../client/signup', {error: null});
+});
+
+app.post('/signup', 
+  databaseController.bcrypt, 
+  databaseController.addAccount, 
+  databaseController.getAccountID, 
+  cookieController.setCookie, 
+  (req, res) => {
+  // when user successfully signs up, need to save account, then redirect them to home page
+  return res.status(200).redirect('/homepage');
+});
+
+app.post('/login', 
+  databaseController.verifyAccount, 
+  databaseController.getAccountID, 
+  cookieController.setCookie, 
+  (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
-  return res.render('../index');
+  return res.redirect('/homepage');
 });
+
+app.get('/homepage', (req, res) => {
+  return res.render('../index')
+})
 
 //test
 // app.get('/db/getName', (req, res) => {
@@ -32,28 +56,22 @@ app.post('/login', databaseController.verifyAccount, databaseController.getAccou
 //   res.json('Peter');
 // })
 
-//when user (get) requests signup page, then render signup page
-app.get('/signup', (req, res) => {
-  res.render('./../client/signup', {error: null});
-});
 
 //user posts request on signup page, create user and return 'home' page
-app.post('/signup', databaseController.bcrypt, databaseController.addAccount, (req, res) => {
-  // when user successfully signs up, need to save account, then redirect them to home page
-  res.status(200).sendFile(path.join(__dirname, '../index.html'));
-});
+
 
 //THIS WAS FOR TESTING, user creates itinerary here
-app.post('/itinerary', databaseController.addItinerary, (req, res) => {
-  res.status(200).render('../index');
+app.post('/homepage/itinerary', databaseController.addItinerary, (req, res) => {
+  console.log('We ARE HERE!')
+  return res.status(200).render('../index');
 })
 
-app.use('/db/getitinerary', databaseController.getItinerary, (req, res) => {
-<<<<<<< HEAD
-  return res.status(200).send(res.locals.itinerary);
-=======
+// app.get('/index', (req, res) => {
+//   return res.status(200).render('../index')
+// })
+
+app.use('/homepage/getItinerary', databaseController.getItinerary, (req, res) => {
   return res.status(200).json(res.locals.itinerary);
->>>>>>> main
 });
 
 app.use('/db/getactivities', databaseController.getActivities, (req, res) => {

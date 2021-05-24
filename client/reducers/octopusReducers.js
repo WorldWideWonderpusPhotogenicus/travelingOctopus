@@ -29,18 +29,24 @@ const octopusReducers = (state = initialState, action) => {
       let newUsername = state.username;
       let newId = state.id; 
       let newItineraries = [];
+      
       const allItineraries = action.payload;
       
       newUsername = action.payload[0].name;
+      newId = action.payload[0].account_id; 
       
+
       for (let i = 0; i < allItineraries.length; i++) {
-        
+        newItineraries.push(allItineraries[i]);
       }
       
 
       return {
         ...state,
+        id: newId,
         username: newUsername,
+        itineraries: newItineraries,
+        
       }
     }
     default:

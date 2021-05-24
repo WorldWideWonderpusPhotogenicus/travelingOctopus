@@ -22,16 +22,16 @@ const ItineraryCreator = (props) => {
     const handleSubmit = (event) => {
         //event.preventDefault();
         const inputs = event.target.getElementsByTagName("input");
-        fetch('/itinerary', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-        countryName: inputs[0].value,
-        countryCode: inputs[1].value,
-        flightName: inputs[2].value,
-        flightPrice: inputs[3].value,
-        hotelName: inputs[4].value,
-        hotelPrice: inputs[5].value
+        fetch('/homepage/itinerary', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                countryName: inputs[0].value,
+                countryCode: inputs[1].value,
+                flightName: inputs[2].value,
+                flightPrice: inputs[3].value,
+                hotelName: inputs[4].value,
+                hotelPrice: inputs[5].value
         })
     })
     .then(res => console.log(res))

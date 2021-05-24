@@ -22,10 +22,18 @@ function TripContainer() {
   //     })
   // },[])
 
+  const itinerary = useSelector(state => state.octo.itineraries)
+  console.log(itinerary);
+  const trips = [];
+
+  for (let i = 0; i < itinerary.length; i++) {
+    trips.push( <Trip{...itinerary[i]} key={itinerary[i]._id} /> )
+  }
+
   return (
 
     <div>
-      
+      {trips}
       {/* <CountryComponent />
       <FlightComponent />
       <HotelComponent />

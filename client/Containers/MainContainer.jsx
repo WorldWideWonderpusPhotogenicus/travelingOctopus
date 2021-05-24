@@ -8,26 +8,28 @@ function MainContainer(){
   //variable?
   //variable?
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //     fetch('/db/getUserData')
-  //       .then((res) => {
-  //         return res.json();
-  //       })
-  //       .then(data => {
-  //         dispatch({ type: 'UPDATE_USER', payload: data })
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  // }, [dispatch]);
+  useEffect(() => {
+      fetch('/homepage/getItinerary')
+        .then((res) => {
+          console.log(res)
+          return res.json();
+        })
+        .then(data => {
+          console.log(data);
+          dispatch({ type: 'UPDATE_USER', payload: data })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+  }, [dispatch]);
 
 
   return (
     <div>
       <UserContainer />
-      {/* <TripContainer /> */}
+      <TripContainer />
     </div>
   );
 };
