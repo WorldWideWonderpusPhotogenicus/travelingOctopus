@@ -2,10 +2,10 @@ import React from 'react';
 //import { Field, reduxForm, formValueSelector } from 'redux-form';
 
 
-export const flightComponent = () => {
+const FlightComponent = () => {
 
-  const flight = useSelector(state => state./**/.flight);
-  const dispatch = useDispatch();
+  // const flight = useSelector(state => state./**/.flight);
+  // const dispatch = useDispatch();
 
   return (
     <div className="tripAspect">
@@ -15,6 +15,15 @@ export const flightComponent = () => {
           <button></button>
         </label>
       </div>
+      <div>
+        <label>
+          <p>$</p>
+          <input placeholder="Current Cost" />
+          <button></button>
+        </label>
+      </div>
     </div>
   )
 }
+
+export default FlightComponent;

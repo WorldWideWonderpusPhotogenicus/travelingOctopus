@@ -1,8 +1,8 @@
-import React from 'react'
+import React from 'react';
+import MainContainer from '../containers/MainContainer.jsx';
 
-//not sure if we need props on line 4
-export const App = (props) => {
 
+function App(props){
   return (
     <div>
       <h1>This worked!</h1>
@@ -11,3 +11,5 @@ export const App = (props) => {
   )
 }
 
+
+export default App;

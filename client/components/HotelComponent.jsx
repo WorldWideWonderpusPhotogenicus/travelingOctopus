@@ -2,10 +2,10 @@ import React from 'react';
 
 
 
-export const HotelComponent = () => {
+const HotelComponent = (props) => {
 
-  const hotel = useSelector(state => state./** */hotel);
-  const dispatch = useDispatch();
+  // const hotel = useSelector(state => state./** */hotel);
+  // const dispatch = useDispatch();
 
   return (
     <div id="tripAspect">
@@ -15,8 +15,15 @@ export const HotelComponent = () => {
           <button></button>
         </label>
       </div>
+      <div>
+        <label>
+          <p>$</p>
+          <input placeholder="Current Cost" />
+          <button></button>
+        </label>
+      </div>
     </div>
   )
-
-
 }
+
+export default HotelComponent;

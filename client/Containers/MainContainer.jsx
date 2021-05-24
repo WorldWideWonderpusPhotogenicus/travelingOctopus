@@ -1,6 +1,8 @@
 import React from 'react';
+import UserContainer from './UserContainer.jsx';
+import TripContainer from './TripContainer.jsx';
 
-export const MainContainer = () => {
+function MainContainer(){
   //variable?
   //variable?
   return (
@@ -10,3 +12,5 @@ export const MainContainer = () => {
     </div>
   );
 };
+
+export default MainContainer; 
