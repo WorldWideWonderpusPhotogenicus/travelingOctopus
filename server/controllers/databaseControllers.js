@@ -15,7 +15,7 @@ databaseController.bcrypt = (req, res, next) => {
       return res.status(400).send('Error: Unable to store password.');
     }
     //stores the hash function into res.locals
-    console.log(hash)
+    //console.log(hash);
     res.locals.bcrypt = hash;
     //returns next() that will pass the hashed password to the next middleware function
     return next();
@@ -30,18 +30,23 @@ databaseController.verifyAccount = (req, res, next) => {
 
     query(queryString, values)
       .then((data) => {
-        console.log(data.rows[0].password)
-        console.log(req.body.password)
-        console.log(bcrypt.compareSync(req.body.password, data.rows[0].password))
-        return next()
+        // console.log(data.rows[0].password)
+        // console.log(req.body.password)
+        //If input login password matches the bcrypt hash in the database, return next() to move to next middleware
+        if (bcrypt.compareSync(req.body.password, data.rows[0].password)) {
+            console.log('Password successfully verified');
+            return next();
+        }
+        console.log('Error: Unable to validate password. Please try again.');
+        return res.render('../../client/login'); //Assumed login.html will be in the client folder
       })
-      .catch((err) => res.render('./../client/login', {
+      .catch((err) => res.render('../../client/login', {
         error: `databaseController.verifyAccount : ERROR: ${err}`,
         message: { err: 'error occurred in databaseController.verifyAccount'}
       }))
   };
   
-  databaseController.addAccount = (req, res, next) => {
+databaseController.addAccount = (req, res, next) => {
     // write code here
     // const { username, password } = req.body;
     const password = res.locals.bcrypt; 
@@ -56,7 +61,7 @@ databaseController.verifyAccount = (req, res, next) => {
         error: `databaseController.addAccount : ERROR: ${err}`,
         message: { err: 'error occurred in databaseController.addAccount'}
       }))
-  };
+};
   
   databaseController.deleteAccount = (req, res, next) => {
     // write code here
@@ -75,6 +80,24 @@ databaseController.verifyAccount = (req, res, next) => {
         });
       });
   };
+
+databaseController.addActivity = (req, res, next) => {
+  //Retrieve Activity Name and Activity Cost from req.body
+  const { activityName, activityCost } = req.body;
+  //Add the activity cost to the activity_cost table and returns its id value
+  let addCost = 'INSERT INTO activity_cost(price) VALUES ($1) RETURNING _ID;' 
+  let addActivity = 'INSERT INTO itinerary_activity(name) VALUES ($1);'
+  query(addCost, activityCost)
+      .then(data => {
+        return next();
+      })
+      .catch((err) => res.render('./../client/signup', {
+        error: `databaseController.addAccount : ERROR: ${err}`,
+        message: { err: 'error occurred in databaseController.addAccount'}
+      }))
+  
+    next();
+};
   
   databaseController.addItinerary = (req, res, next) => {
     // write code here
