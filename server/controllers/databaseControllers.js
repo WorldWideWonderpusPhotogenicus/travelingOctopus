@@ -44,9 +44,10 @@ databaseController.verifyAccount = (req, res, next) => {
   databaseController.addAccount = (req, res, next) => {
     // write code here
     // const { username, password } = req.body;
+    console.log(req.body);
     const password = res.locals.bcrypt; 
-    const values = [req.body._id, req.body.name, req.body.username, password, req.body.currency];
-    let queryString = 'INSERT INTO account(_id, name, username, password, currency) VALUES($1, $2, $3, $4, $5);' 
+    const values = [req.body.fname, req.body.username, password, req.body.currency];
+    let queryString = 'INSERT INTO account(name, username, password, currency) VALUES($1, $2, $3, $4);' 
 
     query(queryString, values)
       .then(data => {
