@@ -56,6 +56,7 @@ databaseController.addAccount = (req, res, next) => {
 
     query(queryString, values)
       .then(data => {
+        console.log(data);
         return next();
       })
       .catch((err) => res.render('./../client/signup', {
@@ -83,21 +84,20 @@ databaseController.addAccount = (req, res, next) => {
   };
 
 databaseController.addActivity = (req, res, next) => {
-  //Retrieve Activity Name and Activity Cost from req.body
-  const { activityName, activityCost } = req.body;
-  //Add the activity cost to the activity_cost table and returns its id value
-  let addCost = 'INSERT INTO activity_cost(price) VALUES ($1) RETURNING _ID;' 
-  let addActivity = 'INSERT INTO itinerary_activity(name) VALUES ($1);'
-  query(addCost, activityCost)
+  //!! Need to persist itinerary id from the request object for the next middleware
+  // Add activity name and activity cost from req.body to a new array
+  const activity = [req.body.activityName, req.body.activityCost];
+  let queryString = 'INSERT INTO activity(name, price) VALUES($1, $2) RETURNING _ID;';
+  query(queryString, activity)
       .then(data => {
+        console.log(data);
+        res.locals.activityID = data.rows[0];
         return next();
       })
-      .catch((err) => res.render('./../client/signup', {
+      .catch((err) => res.render('../../client/signup', {
         error: `databaseController.addAccount : ERROR: ${err}`,
         message: { err: 'error occurred in databaseController.addAccount'}
       }))
-  
-    next();
 };
   
   databaseController.addItinerary = (req, res, next) => {

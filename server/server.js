@@ -34,6 +34,13 @@ app.post('/signup', databaseController.bcrypt, databaseController.addAccount, (r
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
+//Handles post request to add new activity to itinerary
+//Note to populate itinerary_activity table and return all activities associated with the current itinerary id
+app.post('/addactivity', databaseController.addActivity, (req, res) => {
+  // when user successfully adds an activity, currently just returns status 200 and index.html
+  return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+});
+
 //global error handler
 app.use((err, req, res, next) => {
   return res.sendStatus(500);
