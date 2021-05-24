@@ -10,14 +10,14 @@ app.use(express.urlencoded());
 app.use(express.static(path.join(__dirname, '../build')));
 
 //use for rendering ejs templates, ejs must be rendered.
-app.set('view engine', 'ejs')
+app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
   //change return filepath to login screen
   return res.render('../client/login');
 });
 
-app.post('/login', databaseController.verifyAccount, (req, res) => {
+app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, databaseController.getItinerary, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
   res.status(200).sendFile(path.join(__dirname, '../index.html'));
@@ -43,7 +43,7 @@ app.post('/addactivity', databaseController.addActivity, (req, res) => {
 
 //global error handler
 app.use((err, req, res, next) => {
-  return res.sendStatus(500);
+  return res.status(500).send('This is our global error handler message. Yay!');
 });
 
 app.listen(PORT, () => {
