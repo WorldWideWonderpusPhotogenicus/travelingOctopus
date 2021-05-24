@@ -5,9 +5,7 @@ const cookieController = {};
 */
 cookieController.setCookie = (req, res, next) => {
   // write code here
-  let number = Math.ceil(Math.random() * 99);
-  res.cookie('secret', number);
-  // res.cookie('codesmith', 'hi');
+  res.cookie('accountID', res.locals.accountID);
   return next();
 }
 
