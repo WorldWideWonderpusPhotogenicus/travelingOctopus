@@ -12,20 +12,29 @@
  //import * as types from './actions/actions.js';
 
  const initialState = {
-     test : 'testing',
+     id: '',
      country: '',
-     flight: '',
+     username: '',
      hotel: '',
     //  conversion_Currency : '',
-     activities: []
+     currencyExchange: [],
+     itineraries: []
  }
 
 
 const octopusReducers = (state = initialState, action) => {
 
   switch (action.type) {
-    case 'activity/addAnotherActivity': {
-      console.log('dogs')
+    case 'UPDATE_USER': {
+      let newUsername = username;
+      let newId = id; 
+      
+      newUsername = action.payload;
+
+      return {
+        ...state,
+        username: newUsername,
+      }
     }
     default:
       return state;

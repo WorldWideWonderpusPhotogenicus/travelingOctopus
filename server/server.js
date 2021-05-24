@@ -20,14 +20,14 @@ app.get('/', (req, res) => {
 app.post('/login', databaseController.verifyAccount, databaseController.getAccountID, databaseController.getItinerary, (req, res) => {
   // user attempts to login, verify info is accurate, then redirect to user's home page
   // return res.locals.passwords
-  res.render('../index', {name : res.locals.name});
+  return res.render('../index');
 });
 
 //test
-app.get('/db/get', (req, res) => {
-  console.log('req', req);
-  res.json('Peter');
-})
+// app.get('/db/getName', (req, res) => {
+//   console.log('req', req);
+//   res.json('Peter');
+// })
 
 //when user (get) requests signup page, then render signup page
 app.get('/signup', (req, res) => {

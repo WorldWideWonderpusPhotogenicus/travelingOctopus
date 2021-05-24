@@ -19,12 +19,12 @@ import * as types from '../constants/actionTypes';
 // });
 // https://redux.js.org/tutorials/essentials/part-1-overview-concepts
 
-// export const updateCountry = (text) => {
-//   return {
-//     type: 'country/updateCountry',
-//     payload: text
-//   }
-// }
+export const updateName = (data) => {
+  return {
+    type: 'types.UPDATE_USER',
+    payload: data
+  }
+}
 
 // export const updateHotel = (text) => {
 //   return {

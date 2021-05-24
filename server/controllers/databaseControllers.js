@@ -36,13 +36,6 @@ databaseController.verifyAccount = (req, res, next) => {
 
     query(queryString, values)
       .then((data) => {
-<<<<<<< HEAD
-        console.log(data.rows[0].password)
-        console.log(req.body.password)
-        console.log(bcrypt.compareSync(req.body.password, data.rows[0].password))
-        res.locals.name = { fname :'Sean'};
-        return next()
-=======
         //If input login password matches the bcrypt hash in the database, return next() to move to next middleware
         if (bcrypt.compareSync(req.body.password, data.rows[0].password)) {
             console.log('Password successfully verified');
@@ -51,7 +44,6 @@ databaseController.verifyAccount = (req, res, next) => {
         console.log('Error: Unable to validate password. Please try again.');
         // console.log(path.resolve(__dirname, '../../client/login'));
         return res.redirect('/');
->>>>>>> main
       })
       .catch((err) => res.redirect('/', {
         error: `databaseController.verifyAccount : ERROR: ${err}`,
