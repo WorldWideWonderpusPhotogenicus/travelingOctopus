@@ -50,6 +50,7 @@ databaseController.verifyAccount = (req, res, next) => {
 
     query(queryString, values)
       .then(data => {
+        console.log('data inside addAccount middleware', data);
         return next();
       })
       .catch((err) => res.render('./../client/signup', {
@@ -59,27 +60,44 @@ databaseController.verifyAccount = (req, res, next) => {
   };
   
   databaseController.deleteAccount = (req, res, next) => {
-    // write code here
-    const { id } = req.query;
-    const values = [id];
-    const text = 'SELECT name, rotation_period, orbital_period, diameter, climate, gravity, terrain, surface_water, population FROM planets WHERE _id=($1);';
-   
-    db.query(text, values)
-      .then(results => {
-        res.locals.planets = results.rows[0];
-        next();
-      })
-      .catch(() => {
-        next({
-          log: 'starWarsController.js: Error retrieving planet info'
-        });
-      });
+    
+
+     
   };
   
   databaseController.addItinerary = (req, res, next) => {
-    // write code here
-  
-    next();
+    console.log('rec.body for middleware addItinerary --> ', rec.body);
+    
+    const itineraryValues = [
+      [rec.body.countryName, rec.body.countryCode], //country
+      [rec.body.hotelName, rec.body.hotelPrice], //hotel
+      [rec.body.flightName, rec.body.flightPrice], //flight
+      [rec.body.activityName, rec.body.activityPrice] //activity
+    ];
+    
+    const queryStrings = [
+      'INSERT INTO country(name, currency_code) VALUES($1, $2);', //country
+      'INSERT INTO hotel(name, price) VALUES($1, $2);', //hotel
+      'INSERT INTO flight(name, price) VALUES($1, $2);', //flight
+      'INSERT INTO activity(name, price) VALUES($1, $2);' //activity
+    ];
+
+    const foreignKeys = [
+
+    ]
+
+    for (let i = 0; i < queryStrings.length; i++) { 
+      query(queryStrings[i], itineraryValues[i])
+        .then(data => {
+          foreighKeys.push(data.rows[0])
+        })
+        .catch((err) => res.render('./../client/signup', {
+          error: `databaseController.addAccount : ERROR: ${err}`,
+          message: { err: 'error occurred in databaseController.addAccount'}
+        }))
+    }
+
+    return next();
   };
   
   databaseController.deleteItinerary = (req, res, next) => {
