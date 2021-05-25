@@ -11,14 +11,14 @@ const FlightComponent = () => {
     <div className="tripAspect">
       <div>
         <label>
-          <input placeholder="How will we get there?" />
+          <input class="ph" placeholder="How will we get there?" />
           <button></button>
         </label>
       </div>
       <div>
         <label>
           <p>$</p>
-          <input placeholder="Current Cost" />
+          <input class="cost" placeholder="Current Cost" />
           <button></button>
         </label>
       </div>

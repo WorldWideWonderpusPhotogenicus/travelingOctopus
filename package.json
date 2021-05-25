@@ -36,6 +36,7 @@
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
+    "css-loader": "^5.2.6",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "pg": "^8.6.0",
@@ -45,6 +46,7 @@
     "react-redux": "^7.2.4",
     "redux": "^4.1.0",
     "redux-devtools-extension": "^2.13.9",
-    "sql": "^0.78.0"
+    "sql": "^0.78.0",
+    "style-loader": "^2.0.0"
   }
 }

@@ -70,13 +70,13 @@ databaseController.getAccountID = (req, res, next) => {
 };
 
 databaseController.getItinerary = (req, res, next) => {
-  const accountID = req.cookies.accountID; //Account ID is obtained from a cookie.
+  const accountID = [req.cookies.accountID]; //Account ID is obtained from a cookie.
   // const accountID = [res.locals.accountID];
   // let queryString = 'SELECT i.*, c.name AS country_name, c.currency_code AS currency_code, f.name AS flight_name, f.price AS flight_price, h.name AS hotel_name, h.price AS hotel_price, y.name AS activity_name, y.price AS activity_price FROM itinerary i LEFT OUTER JOIN country c on i.country_id = c._id LEFT OUTER JOIN flight f on i.flight_id = f._id LEFT OUTER JOIN hotel h on i.hotel_id = h._id LEFT OUTER JOIN itinerary_activity x on i._id = x.itinerary_id LEFT OUTER JOIN activity y ON x.activity_id = y._id WHERE account_id = $1;' 
   let queryString = 'SELECT i.*, c.name AS country_name, c.currency_code AS currency_code, f.name AS flight_name, f.price AS flight_price, h.name AS hotel_name, h.price AS hotel_price, u.name AS name, u.currency AS user_currency FROM itinerary i LEFT OUTER JOIN country c on i.country_id = c._id LEFT OUTER JOIN flight f on i.flight_id = f._id LEFT OUTER JOIN hotel h on i.hotel_id = h._id LEFT OUTER JOIN account u ON i.account_id = u._id WHERE account_id = $1;' 
   query(queryString, accountID)
       .then(data => {
-        console.log(data.rows);
+        //console.log(data.rows);
         res.locals.itinerary = data.rows;
         return next();
       })
@@ -139,10 +139,10 @@ databaseController.addAccount = (req, res, next) => {
 
   query(queryString, values)
     .then((data) => {
-      console.log(
-        "data inside addAccount middleware",
-        console.log(data.rows[0]._id)
-      );
+      // //console.log(
+      //   "data inside addAccount middleware",
+      //   //console.log(data.rows[0]._id)
+      // );
       return next();
     })
     .catch((err) =>
@@ -156,6 +156,7 @@ databaseController.addAccount = (req, res, next) => {
 databaseController.deleteAccount = (req, res, next) => {};
 
 databaseController.addItinerary = async (req, res, next) => {
+  console.log('this is request', req.body)
   const itineraryValues = [
     [req.body.countryName, req.body.countryCode], //country
     [req.body.hotelName, req.body.hotelPrice], //hotel
@@ -184,15 +185,16 @@ databaseController.addItinerary = async (req, res, next) => {
       );
   }
 
+  foreignKeys = [...foreignKeys, req.cookies.accountID];
+  
   console.log("CHECK ->>>>>>>>>>>>>>>>>", foreignKeys);
-
   // below creates itinerary with given foreign keys
-  foreignKeys = [...foreignKeys, req.body.accountId];
   const itineraryQueryStrings =
     "INSERT INTO itinerary(country_id, flight_id, hotel_id, account_id) VALUES($1, $2, $3, $4)";
 
   await query(itineraryQueryStrings, foreignKeys)
     .then((data) => {
+      console.log('inside query')
       return next();
     })
     .catch((err) =>
@@ -229,7 +231,7 @@ databaseController.addActivity = (req, res, next) => {
   let queryString = 'INSERT INTO activity(name, price) VALUES($1, $2) RETURNING _ID;';
   query(queryString, activity)
       .then(data => {
-        console.log(data.rows[0]._id);
+        //console.log(data.rows[0]._id);
         //Save the activity id in res.locals
         res.locals.activityID = data.rows[0]._id;
         return next();

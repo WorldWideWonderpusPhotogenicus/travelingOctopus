@@ -18,15 +18,28 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           }
         }
+      },
+      {
+        test: /.(css|scss)$/,
+        exclude: /node_modules/,
+        use: [
+          "style-loader",
+          "css-loader",
+        ],
       }
+
     ]
   },
   devServer: {
     publicPath: '/build/',
     port: 8080,
     proxy: {
-      '/': 'http://localhost:3000',
-      '../../client/login': 'http://localhost:3000'
+      // '/': 'http://localhost:3000',
+      // '/homepage': 'http://localhost:3000',
+      // '/login': 'http://localhost:3000',
+      "*": 'http://[::1]:3000',
+      "secure": false,
+      "changeOrigin": true,
+      }
     }
   }
-}

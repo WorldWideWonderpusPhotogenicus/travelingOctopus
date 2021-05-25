@@ -12,20 +12,53 @@
  //import * as types from './actions/actions.js';
 
  const initialState = {
-     test : 'testing',
+     id: '',
      country: '',
-     flight: '',
+     username: '',
      hotel: '',
+     currencyType: "",
     //  conversion_Currency : '',
-     activities: []
+     exchangeRate: [],
+     itineraries: []
  }
 
 
 const octopusReducers = (state = initialState, action) => {
 
   switch (action.type) {
-    case 'activity/addAnotherActivity': {
-      console.log('dogs')
+    case 'UPDATE_USER': {
+      let newUsername = state.username;
+      let newId = state.id; 
+      let newItineraries = [];
+      let newCurrency = action.payload[0].user_currency;
+
+      const allItineraries = action.payload;
+      
+      newUsername = action.payload[0].name;
+      newId = action.payload[0].account_id; 
+      
+      
+
+      for (let i = 0; i < allItineraries.length; i++) {
+        newItineraries.push(allItineraries[i]);
+      }
+      
+
+      return {
+        ...state,
+        id: newId,
+        username: newUsername,
+        currencyType : newCurrency,
+        itineraries: newItineraries,
+        
+      }
+    }
+    case 'UPDATE_CURRENCY': {
+      let newExchangeRate = action.payload.conversion_rates;
+      return {
+        ...state,
+        exchangeRate: newExchangeRate,
+      }
     }
     default:
       return state;
