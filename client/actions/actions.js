@@ -26,6 +26,12 @@ export const updateName = (data) => {
   }
 }
 
+export const updateCurrency = (data) => {
+  return {
+    type: 'types.UPDATE_CURRENCY',
+    payload: data
+  }
+}
 // export const updateHotel = (text) => {
 //   return {
 //     type: 'hotel/updateHotel',

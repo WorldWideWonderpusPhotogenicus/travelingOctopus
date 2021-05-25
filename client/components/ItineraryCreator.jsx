@@ -19,30 +19,40 @@ const ItineraryCreator = (props) => {
     // }
     // },[])
 
-    const handleSubmit = (event) => {
-        //event.preventDefault();
-        const inputs = event.target.getElementsByTagName("input");
-        fetch('/homepage/itinerary', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                countryName: inputs[0].value,
-                countryCode: inputs[1].value,
-                flightName: inputs[2].value,
-                flightPrice: inputs[3].value,
-                hotelName: inputs[4].value,
-                hotelPrice: inputs[5].value
-        })
-    })
-    .then(res => console.log(res))
-    .catch(err => {
-        console.log(err)
-    })
-}      
+    // fetch('https://v6.exchangerate-api.com/v6/210336b0a4a601367acee4c6/latest/USD')
+    // .then((res) => res.json())
+    //.then((data.conversion_rates) => {
+        //if (useState(state => state.octo.currency))
+    //})
+    //  // grab user native currency 
+    // let userCurrency = state.octo.currency;
+    // // grab their vacation country currency
+
+
+//     const handleSubmit = (event) => {
+//         //event.preventDefault();
+//         const inputs = event.target.getElementsByTagName("input");
+//         fetch('/homepage/itinerary', {
+//             method: 'POST',
+//             headers: { 'Content-Type': 'application/json' },
+//             body: JSON.stringify({
+//                 countryName: inputs[0].value,
+//                 countryCode: inputs[1].value,
+//                 flightName: inputs[2].value,
+//                 flightPrice: inputs[3].value,
+//                 hotelName: inputs[4].value,
+//                 hotelPrice: inputs[5].value
+//         })
+//     })
+//     .then(res => console.log(res))
+//     .catch(err => {
+//         console.log(err)
+//     })
+// }      
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form method="POST" action='/homepage/itinerary'>
                 <label>
                     Where would you like to go?
                     <input name="countryName" type="text" placeholder="addCountry" />

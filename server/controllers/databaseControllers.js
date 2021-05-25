@@ -185,15 +185,16 @@ databaseController.addItinerary = async (req, res, next) => {
       );
   }
 
-  console.log("CHECK ->>>>>>>>>>>>>>>>>", foreignKeys);
-
-  // below creates itinerary with given foreign keys
   foreignKeys = [...foreignKeys, req.cookies.accountID];
+  
+  console.log("CHECK ->>>>>>>>>>>>>>>>>", foreignKeys);
+  // below creates itinerary with given foreign keys
   const itineraryQueryStrings =
     "INSERT INTO itinerary(country_id, flight_id, hotel_id, account_id) VALUES($1, $2, $3, $4)";
 
   await query(itineraryQueryStrings, foreignKeys)
     .then((data) => {
+      console.log('inside query')
       return next();
     })
     .catch((err) =>

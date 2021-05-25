@@ -16,8 +16,9 @@
      country: '',
      username: '',
      hotel: '',
+     currencyType: "",
     //  conversion_Currency : '',
-     currencyExchange: [],
+     exchangeRate: [],
      itineraries: []
  }
 
@@ -29,11 +30,13 @@ const octopusReducers = (state = initialState, action) => {
       let newUsername = state.username;
       let newId = state.id; 
       let newItineraries = [];
-      
+      let newCurrency = action.payload[0].user_currency;
+
       const allItineraries = action.payload;
       
       newUsername = action.payload[0].name;
       newId = action.payload[0].account_id; 
+      
       
 
       for (let i = 0; i < allItineraries.length; i++) {
@@ -45,8 +48,16 @@ const octopusReducers = (state = initialState, action) => {
         ...state,
         id: newId,
         username: newUsername,
+        currencyType : newCurrency,
         itineraries: newItineraries,
         
+      }
+    }
+    case 'UPDATE_CURRENCY': {
+      let newExchangeRate = action.payload.conversion_rates;
+      return {
+        ...state,
+        exchangeRate: newExchangeRate,
       }
     }
     default:

@@ -11,14 +11,14 @@ const HotelComponent = (props) => {
     <div id="tripAspect">
       <div>
         <label>
-          <input placeholder="Where will we stay?" />
+          <input class="ph" placeholder="Where will we stay?" />
           <button></button>
         </label>
       </div>
       <div>
         <label>
           <p>$</p>
-          <input placeholder="Current Cost" />
+          <input class="cost" placeholder="Current Cost" />
           <button></button>
         </label>
       </div>
